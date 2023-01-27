@@ -1,8 +1,11 @@
 import React from 'react'
+import { Stack } from '@mui/system'
 
 const Home = () => {
   return (
-    <div>jesfwkfwfj</div>
+    <Stack>
+      
+    </Stack>
   )
 }
 

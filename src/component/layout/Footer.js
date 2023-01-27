@@ -9,7 +9,7 @@ const Footer = () => {
     <Stack direction="row"
     alignItems='center'
     sx={{backgroundColor:'rgba(35,35,35,0.8)',justifyContent:'space-around',mt:'40px',color:'#FFFFFF',p:'15px'}}>
-    <Box  sx={{'>p':{p:'10px'},'>img':{p:'5px'},textAlign:'center'}}>
+    <Box  sx={{'>p':{p:'10px'},'>div':{p:'5px'},textAlign:'center'}}>
         <Typography >
             DOWNLOAD OUR APP
         </Typography>
