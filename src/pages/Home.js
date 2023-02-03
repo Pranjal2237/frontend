@@ -1,10 +1,13 @@
 import React from 'react'
 import { Stack } from '@mui/system'
+import SliderLink from '../component/layout/SliderLink'
+
 
 const Home = () => {
+
   return (
-    <Stack>
-      
+    <Stack sx={{}}>
+      {/* <SliderLink/> */}
     </Stack>
   )
 }

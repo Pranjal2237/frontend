@@ -1,24 +1,17 @@
 import { Box, Stack } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import SideBar from "../component/layout/SideBar";
-import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../redux/slice/productsSlice";
-import ProductCard from "../component/ProductCard";
+import ProductCard from "../component/layout/ProductCard";
 
 const Products = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
 
-  console.log(state);
+
   return (
-    <Stack direction="row" sx={{ justifyContent: "space-around" }}>
-      <Box>
+    <Stack direction="row" sx={{ justifyContent: "center" }}>
+      <Box sx={{}}>
         <SideBar />
       </Box>
-      <Box>
+      <Box sx={{}}>
         <ProductCard />
       </Box>
     </Stack>

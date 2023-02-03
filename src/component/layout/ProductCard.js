@@ -1,23 +1,44 @@
-import React from "react";
+import React,{ useEffect, } from "react";
 import { Box, Button, styled, Typography } from "@mui/material";
-import { product } from "../extra/productInformation";
 import Rating from "@mui/material/Rating";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ZoomInOutlinedIcon from "@mui/icons-material/ZoomInOutlined";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getProducts } from "../../redux/slice/productsSlice";
+import {add} from '../../redux/slice/CartSlice'
 
 const ProductCard = () => {
+  
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+
+
   const StyledButton = styled(Button)({
     minWidth: "0px",
   });
+
+  const d=useDispatch();
+
+  const handleAdd =(product)=>{
+    d(add(product))
+  }
+
+
   return (
     <Box>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <Box sx={{ width: "350px" }}>
-          <Link to="/product/laptop">
+    {state?.products?.data?.products.map((product)=>{
+
+  return(
+      <Box sx={{ display: "flex", alignItems: "center",mt:'30px' }}>
+        <Box sx={{ width: "350px"}}>
+          <Link to={`/product/${product._id}`} >
             <img
-              src={product[0].image}
+              src={product.images[0].public_id}
               alt=""
               style={{ width: "100%", objectFit: "cover" }}
             />
@@ -25,21 +46,23 @@ const ProductCard = () => {
         </Box>
         <Box sx={{}}>
           <Typography sx={{ fontWeight: "bold", color: "#000080" }}>
-            {product[0].name}
+            {product.name}
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography>Rs. {product[0].price}</Typography>
+            <Typography>Rs. {product.price}</Typography>
             <Rating
               name="rating"
-              value={product[0].rating}
+              value={product.rating}
               readOnly
               sx={{ m: "5px"}}
             />
           </Box>
-          <Typography>{product[0].description}</Typography>
-          <StyledButton>
+          <Typography>{product.description}</Typography>
+          {/* <Link to="/cart"> */}
+          <StyledButton onClick={()=> handleAdd(product)}>
             <ShoppingCartOutlinedIcon />
           </StyledButton>
+          {/* </Link> */}
           <StyledButton>
             <FavoriteBorderOutlinedIcon />
           </StyledButton>
@@ -48,6 +71,8 @@ const ProductCard = () => {
           </StyledButton>
         </Box>
       </Box>
+  )
+    })}
     </Box>
   );
 };
