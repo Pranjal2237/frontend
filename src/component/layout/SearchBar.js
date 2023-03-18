@@ -14,7 +14,8 @@ const SearchBar = () => {
 
   const handleSubmit=(event)=>{
     event.preventDefault();
-    dispatch(getProducts(keyword))
+    const check={currentPage:1,rating:0,priceL:0,priceH:10000000000,keyword:keyword}
+    dispatch(getProducts(check))
     navigate('/products');
   }
 

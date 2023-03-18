@@ -16,11 +16,11 @@ const SliderLink = () => {
     cssEase: "linear"
   };
   return (
-    <Box sx={{'>.slick-slider':{'>.slick-prev':{left:'25px',zIndex:'3'},'>.slick-next':{right:'25px',zIndex:'3'}}}}>
+    <Box sx={{'>.slick-slider':{'>.slick-prev':{left:'25px',zIndex:'3'},'>.slick-next':{right:'25px',zIndex:'3'}},border:'2px solid red'}}>
     <Slider {...settings}>
     {sliders.map((slide)=>{
         return(
-            <Box  sx={{border:'1px solid black'}} >
+            <Box  sx={{border:'2px solid black'}} >
             <img src={slide} alt='' style={{width:'100%'}} />
             </Box>
         )

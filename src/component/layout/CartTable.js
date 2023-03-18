@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React,{useEffect, useState} from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,35 +7,32 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { AddCard } from "@mui/icons-material";
+import { addCart, deleteCart } from "../../redux/slice/loginSlice";
+import CancelIcon from '@mui/icons-material/Cancel';
 
 const CartTable = () => {
 
   const state=useSelector((state)=>state)
 
-  const [rows,setRows] = useState([]);
+  const dispatch=useDispatch();
 
-  const [quantity, setquantity] = useState(1);
-
-  useEffect(()=>{
-    setRows(state.cart);
-    console.log(rows);
-  },[state]);
    
-  const handleChange = (e,index) =>{
-    console.log(rows[index].stock);
-    let arr=[...rows];
-    let obj={...arr[index]}
-    obj.stock=e.target.value;
-    arr[index]=obj;
-    console.log(arr)
-    setRows(arr)
-
-
+  const handleChange = (e,product_id) =>{
+    
+    dispatch(addCart({quantity:e.target.value,product_id}));
   }
+  
+  const handleDelete=(cart_id)=>{
+    console.log(cart_id)
+    dispatch(deleteCart(cart_id));
+  }
+  
+
   return (
     <Box>
-      <TableContainer component={Paper} sx={{ width: "800px",boxShadow:'none' }}>
+      <TableContainer component={Paper} sx={{ width: "800px",boxShadow:'none',overflowY:'auto',height:'75vh' }}>
         <Table sx={{ Width: "100%" }} aria-label="simple table">
           <TableHead>
             <TableRow sx={{ ">th": { fontSize: "20px", fontWeight: "700" } }}>
@@ -46,26 +43,31 @@ const CartTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row,index) => (
+            {state?.userLogin?.data?.user.cartItems.map((row,index) => (
               <TableRow
                 key={row.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
-                <TableCell component="th" scope="row">
-                  {row.name}
+                <TableCell component="th" scope="row" sx={{display:'flex','>p':{ml:'5px'}}}>
+                <CancelIcon sx={{cursor:'pointer'}} onClick={()=>{handleDelete(row._id)}} />
+                <Box sx={{display:'flex',alignItems:'center','>p':{ml:'5px'}}}>
+                  <img src={row.images[0].public_id} alt="" width='150px'/>
+                  <Typography>{row.name}</Typography>
+                  </Box>
                 </TableCell>
                 <TableCell align="right">{row.price}</TableCell>
                 <TableCell align="right">
                   <input
                     type="number"
-                    defaultValue={row.stock}
+                    value={row.quantity}
+                    defaultValue={row.quantity}
                     onChange={(e)=>{
-                      handleChange(e,index)
+                      handleChange(e,row.product_id)
                     }}
                     style={{ width: "50px", outline: "none", height: "20px" }}
                   />
                 </TableCell>
-                <TableCell align="right">{row.price*row.stock}</TableCell>
+                <TableCell align="right">Rs. {row.quantity*row.price}</TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -19,10 +19,12 @@ const Header = () => {
         background: " #A020F0",
         top: 0,
         justifyContent: "space-between",
+        height:"70px",
       }}
     >
-      <Link to="/">
-        <img src={logo} alt="logo" height={80}></img>
+      <Link to="/" style={{textDecoration:'none'}}>
+        {/* <img src={logo} alt="logo" height={80}></img> */}
+        <Box fontFamily="'Josefin Sans', sans-serif" fontWeight='800' ml='40px' color='#fff' fontSize='2rem'>Ecommerce</Box>
       </Link>
       <Stack
         direction="row"

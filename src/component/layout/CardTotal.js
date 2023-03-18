@@ -1,29 +1,68 @@
-import React from "react";
+import React, {  } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, } from "@mui/material";
+// import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const CardTotal = () => {
+const CardTotal = ({totalCount}) => {
+
+  const state=useSelector((state)=>state)
+
   function createData(name, calories, fat, carbs, protein) {
     return { name, calories, fat, carbs, protein };
   }
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const rows = [
-    createData("Subtotals:", 159, 6.0, 24, 4.0),
-    createData("Totals:", 237, 9.0, 37, 4.3),
-  ];
+  let subtotal=0;
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    state?.userLogin?.data?.user.cartItems.map((item)=>{
+      subtotal=subtotal+item.quantity*item.price;
+    })
 
-    navigate("/payment");
-  };
+  let taxtotal=Math.ceil(subtotal*0.10);  
+
+  let delivery=40;
+  if(subtotal>500)
+  {
+    delivery='Free'
+    console.log('delivery',delivery);
+  }
+
+  let total=subtotal+taxtotal;
+
+  if(delivery===Number(40))
+  {
+    total=total+delivery; 
+  }
+
+  if(state?.userLogin?.data?.user.cartItems!==null)
+  {
+  // const cartPrice={
+  //   itemsPrice:subtotal,
+  //   taxPrice:taxtotal,
+  //   shippingPrice:delivery===Number(40)?40:0,
+  //   totalPrice:total
+  // }
+}
+
+
+    const rows = [
+      createData("Subtotals:", subtotal, 6.0, 24, 4.0),
+      createData("Taxtotals:", taxtotal, 6.0, 24, 4.0),
+      createData("Delivey Charges:", delivery, 6.0, 24, 4.0),
+      createData("Totals:", total, 9.0, 37, 4.3),
+    ];
+
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   navigate("/payment");
+  // };
   return (
     <Box
       sx={{
@@ -35,7 +74,7 @@ const CardTotal = () => {
     >
       <TableContainer
         component={Paper}
-        sx={{ boxShadow: "none", width: "300px" }}
+        sx={{ boxShadow: "none", width: "400px" }}
       >
         <Table sx={{ Width: "100%", p: "10px" }} aria-label="simple table">
           {/* <TableHead>
@@ -56,17 +95,17 @@ const CardTotal = () => {
                 <TableCell
                   component="th"
                   scope="row"
-                  sx={{ fontWeight: "bolder" }}
+                  sx={{ fontWeight:'400',fontSize:'20px' }}
                 >
                   {row.name}
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right" sx={{fontSize:'18px'}}>{row.calories}</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <form>
+      {/* <form>
         <Box>
           <input type="checkbox" required />
           <lebel>Shipping & taxes calculated at Checkout</lebel>
@@ -85,7 +124,7 @@ const CardTotal = () => {
         >
           Proceed To Checkout
         </Button>
-      </form>
+      </form> */}
     </Box>
   );
 };

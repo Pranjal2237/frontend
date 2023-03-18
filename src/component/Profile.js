@@ -1,12 +1,24 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import { profile } from "../extra/profilecontent";
 import { Link } from "react-router-dom";
-import { BorderStyle } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../redux/slice/loginSlice";
 
 const Profile = () => {
   const [open, setopen] = useState(false);
+
+  const dispatch=useDispatch();
+
+  const handleLogout=(key)=>{
+    if(key==='Log Out')
+    {
+      console.log('checked logout')
+      dispatch(logoutUser());
+    }
+    setopen(false);
+  }
 
   return (
     <Box>
@@ -53,9 +65,9 @@ const Profile = () => {
         }}
       >
         <ul style={{ listStyle: "none", padding: "20px 40px" }}>
-          {profile.map((option) => {
-            return (
-              <li
+        {profile.map((option)=>{
+          return(
+            <li
                 style={{
                   margin: "10px 0px",
                   borderBottom: "1px solid black",
@@ -63,19 +75,22 @@ const Profile = () => {
                   width: "100%",
                 }}
               >
+             
                 <Link to={option.src} style={{ textDecoration: "none" }}>
-                  <Box sx={{ display: "flex" }}>
+                  <Box sx={{ display: "flex",alignItems:'center' }} >
                     {option.icon}
+                    <Button sx={{textTransform:'none',ml: "5px"}} onClick={()=>(handleLogout(option.type))} >
                     <Typography
-                      sx={{ ml: "5px", fontSize: "15px", fontWeight: "700" }}
+                      sx={{ fontSize: "15px", fontWeight: "700" }}
                     >
                       {option.type}
                     </Typography>
+                    </Button>
                   </Box>
                 </Link>
               </li>
-            );
-          })}
+          )
+        })}
         </ul>
       </Box>
     </Box>
