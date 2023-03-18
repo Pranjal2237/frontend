@@ -4,6 +4,7 @@ import Axios from 'axios'
 export const loginUser=createAsyncThunk('loginUser',async({email,password})=>{
     const config={
             "Content-Type":"application/json",
+            withCredentials:true
     }
     const body={
         email,
@@ -14,26 +15,37 @@ export const loginUser=createAsyncThunk('loginUser',async({email,password})=>{
     config);
 
     console.log(response.data);
+    console.log(response.headers)
     return response.data;
 });
+
+export const loadUser=createAsyncThunk('loadUser',async()=>{
+
+    const response=await Axios.get('http://localhost:4000/app/v1/user',{withCredentials:true});
+    console.log(response.data)
+    return response.data
+})
 
 const loginSlice=createSlice({
     name:'login',
     initialState:{
-        isLoading:false,
+isLoading:false,
         data:null,
         error:false
-    },
+    },        
     extraReducers:(builder)=>{
-        builder.addCase(loginUser.pending,(state,action)=>{
-            state.isLoading=true;
+        console.log('working')
+        builder.addCase(loginUser.pending||loadUser.pending,(state,action)=>{
+            console.log('working')
+            return{...state,isLoading:true};
         })
-        builder.addCase(loginUser.fulfilled,(state,action)=>{
+        builder.addCase(loginUser.fulfilled||loadUser.fulfilled,(state,action)=>{
+            console.log('working2')
             state.isLoading=false;
             state.data=action.payload;
-            alert(`User logged in successfully`)
+            // alert(`User logged in successfully`)
         })
-        builder.addCase(loginUser.rejected,(state,action)=>{
+        builder.addCase(loginUser.rejected||loadUser.rejected,(state,action)=>{
             state.error=true;
             console.log('error',action.payload.message);
         })

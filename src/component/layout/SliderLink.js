@@ -16,12 +16,12 @@ const SliderLink = () => {
     cssEase: "linear"
   };
   return (
-    <Box>
+    <Box sx={{'>.slick-slider':{'>.slick-prev':{left:'25px',zIndex:'3'},'>.slick-next':{right:'25px',zIndex:'3'}}}}>
     <Slider {...settings}>
     {sliders.map((slide)=>{
         return(
             <Box  sx={{border:'1px solid black'}} >
-            <img src={slide} alt='' style={{width:'80%'}} />
+            <img src={slide} alt='' style={{width:'100%'}} />
             </Box>
         )
     })}

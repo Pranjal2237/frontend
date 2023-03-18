@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <Stack sx={{}}>
-      {/* <SliderLink/> */}
+      <SliderLink/>
     </Stack>
   )
 }

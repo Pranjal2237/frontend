@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser } from "../redux/slice/loginSlice";
@@ -28,10 +28,15 @@ const Login = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispat(loginUser(user));
-    if (state?.user?.data?.success) {
-      navigate("/about");
-    }
   };
+
+  // useEffect(()=>{
+  //   handleSubmit()
+  // },[handleSubmit()])
+
+  if (state?.userLogin?.data) {
+    navigate("/");
+  }
 
   return (
     <Box

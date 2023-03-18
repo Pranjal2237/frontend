@@ -1,7 +1,6 @@
 
 import { Box, Button, Stack, Typography } from '@mui/material'
 import React, { useEffect } from 'react'
-import { product } from '../../extra/productInformation';
 import Rating from "@mui/material/Rating";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { useDispatch,useSelector } from 'react-redux';
@@ -18,9 +17,8 @@ const SingleProductInformation = () => {
   const product=useSelector((state)=>state?.singleProduct)
 
 
-
   return (
-    <Stack direction="row" sx={{alignItems:'center',width:'900px',mt:'60px',ml:'20%',boxShadow:'5px 5px 20px 5px #f6def4'}}>
+    <Stack direction="row" sx={{alignItems:'center',width:'900px',mt:'60px',ml:'20%',boxShadow: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px'}}>
     <Box sx={{width:'150px'}}>
     <img src={product?.data?.pro.images[0].public_id} alt="" style={{width:'100%',objectFit:'cover'}}/>
     <img src={product?.data?.pro.images[0].public_id} alt="" style={{width:'100%',objectFit:'cover'}}/>
@@ -47,7 +45,7 @@ const SingleProductInformation = () => {
             <Button>Add to Cart</Button>
             <Button><FavoriteBorderOutlinedIcon/></Button>
         </Box>
-        <Typography>Categories:{product?.data?.pro.category}</Typography>
+        <Typography>Category:{product?.data?.pro.category}</Typography>
         
         </Box>
     </Stack>

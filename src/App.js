@@ -11,20 +11,29 @@ import Signup from "./pages/Signup.js";
 import Cart from "./pages/Cart.js";
 import Payment from "./pages/Payment.js";
 import Ordered from "./pages/Ordered.js";
+import './App.css'
+import { loadUser } from "./redux/slice/loginSlice.js";
+import Store, { store } from './redux/store' ;
+import { useEffect } from "react";
 
 function App() {
+
+  useEffect(()=>{
+    store.dispatch(loadUser());
+  },[])
+  
   return (
     <Router>
       <Header style={{ zIndex: 1000, position: "Relative" }} />
       <Routes>
-        {/* <Route exact path="/" element={<Home />} /> */}
+        <Route exact path="/" element={<Home />} />
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<SingleProduct />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup/>} />
-        <Route path="/cart" element={<Cart/>} />
+        <Route path="/user/orders" element={<Cart/>} />
         <Route path="/payment" element={<Payment/>} />
         <Route path="/payment/ordered" element={<Ordered/>} />
       </Routes>

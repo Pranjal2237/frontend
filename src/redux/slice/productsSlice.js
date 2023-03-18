@@ -4,7 +4,7 @@ import Axios from 'axios'
 export const getProducts=createAsyncThunk('getProducts',async({currentPage=1,category,rating=0,priceL=0,priceH=10000000000,keyword=''})=>{
 
     console.log(category);
-    console.log(rating);
+    //console.log(rating);
     // console.log(currentPage)
     // console.log(keyword)
 
@@ -18,6 +18,8 @@ export const getProducts=createAsyncThunk('getProducts',async({currentPage=1,cat
 
 
     const response=await Axios.get(link);
+    console.log(response.data);
+    console.log(response.headers);
     return response.data;
 })
 
